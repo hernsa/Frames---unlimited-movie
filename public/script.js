@@ -1,7 +1,6 @@
 const IMG = 'https://image.tmdb.org/t/p';
 const API_KEY = '85134f05e0f15fe779e23cd56c1a08d5';
 const BASE = 'https://api.themoviedb.org/3';
-const IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
 
 const PLAYERS = [
   { name: 'VidEasy', url: (t, i, s, e) => `https://player.videasy.net/${t === 'movie' ? `movie/${i}?color=e50914&overlay=true` : `tv/${i}/${s || 1}/${e || 1}?color=e50914&autoplayNextEpisode=true&nextEpisode=true&episodeSelector=true&overlay=true`}` },
@@ -32,15 +31,9 @@ function toast(m) {
 }
 
 async function tmdb(ep, extra = {}) {
-  let url;
-  if (IS_LOCAL) {
-    const sep = ep.includes('?') ? '&' : '?';
-    url = `${BASE}${ep}${sep}api_key=${API_KEY}&language=en-US`;
-    Object.entries(extra).forEach(([k, v]) => url += `&${k}=${encodeURIComponent(v)}`);
-  } else {
-    const params = new URLSearchParams({ ep, ...extra });
-    url = `/api/tmdb?${params.toString()}`;
-  }
+  const sep = ep.includes('?') ? '&' : '?';
+  let url = `${BASE}${ep}${sep}api_key=${API_KEY}&language=en-US`;
+  Object.entries(extra).forEach(([k, v]) => url += `&${k}=${encodeURIComponent(v)}`);
   const ck = 'tmdb_' + ep + JSON.stringify(extra);
   if (ep.indexOf('search') === -1) {
     try {

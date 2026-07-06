@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/tmdb" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
-  ]
-}
