@@ -1,6 +1,6 @@
 const API_KEY = process.env.TMDB_API_KEY || '85134f05e0f15fe779e23cd56c1a08d5';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   const { ep, ...params } = req.query;
   if (!ep) return res.status(400).json({ error: 'Missing endpoint' });
 
@@ -20,4 +20,4 @@ module.exports = async (req, res) => {
   } catch (err) {
     return res.status(502).json({ error: 'TMDB fetch failed' });
   }
-};
+}
