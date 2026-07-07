@@ -553,8 +553,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   // Sidebar toggle (mobile)
-  document.getElementById('menu-btn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebar').onclick = (e) => { if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open'); };
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  document.getElementById('menu-btn').onclick = () => {
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('active');
+  };
+  backdrop.onclick = () => {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('active');
+  };
+  sidebar.onclick = (e) => { if (window.innerWidth <= 900 && e.target.closest('.nav-item, .genre-chip, .sidebar-player-btn')) {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('active');
+  }};
 
   // Avatar
   document.getElementById('avatar-btn').onclick = () => {
